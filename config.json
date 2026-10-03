@@ -1,0 +1,5 @@
+{
+  "_说明": "手写署名配置。credit 写在每张图右下角，默认「@公众号名」。别人安装时请在 config.local.json（不进 git）里写自己的 {\"accountName\": \"你的公众号名\"}，或直接改这里。credit 留空 = 不加署名。",
+  "accountName": "怂怂的AI脑内小剧场",
+  "credit": "@怂怂的AI脑内小剧场"
+}

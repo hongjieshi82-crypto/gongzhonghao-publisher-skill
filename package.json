@@ -1,0 +1,20 @@
+{
+  "name": "gongzhonghao-publisher-skill",
+  "version": "1.0.0",
+  "description": "公众号发布 Skill：选风格→配图→排版→复制到公众号。作者 史鸿洁，CC BY-NC 4.0。",
+  "author": "史鸿洁 (Shi Hongjie) <hongjieshi82@gmail.com> (https://github.com/hongjieshi82-crypto)",
+  "license": "CC-BY-NC-4.0",
+  "homepage": "https://github.com/hongjieshi82-crypto/gongzhonghao-publisher-skill",
+  "repository": { "type": "git", "url": "https://github.com/hongjieshi82-crypto/gongzhonghao-publisher-skill.git" },
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "doctor": "node scripts/doctor.js",
+    "styles": "node scripts/styles.js",
+    "build": "node scripts/build.js",
+    "selftest": "node scripts/selftest.js",
+    "check": "node scripts/check-repo.js",
+    "sync": "node scripts/sync-from-workbench.js"
+  }
+}

@@ -1,0 +1,32 @@
+# 作者：史鸿洁 · CC BY-NC 4.0 · 不提交密钥、文章、个人照片和输出
+.DS_Store
+Thumbs.db
+node_modules/
+*.log
+*.tmp
+.env
+.env.*
+*.key
+*.pem
+config.local.json
+
+# 文章、草稿、输出
+work/
+out/
+output/
+articles/
+drafts/
+成品/
+*.html
+*.wx.json
+*.credit.png
+*.credit.jpg
+*.credit.jpeg
+*.credit.webp
+
+# 个人照片和作者形象（含作者本人的样图只留在本机）
+_owner/
+photos/
+styles/*/*owner*.*
+styles/*/user-reference.*
+styles/neon-scifi-cartoon/*-sample-v1.*

@@ -1,0 +1,13 @@
+{
+ "_作者": "史鸿洁（GitHub hongjieshi82-crypto · 公众号「怂怂的AI脑内小剧场」）· © 2026 史鸿洁 · CC BY-NC 4.0，详见 LICENSE",
+ "source": "https://github.com/hongjieshi82-crypto/gongzhonghao-workbench",
+ "workbenchCommit": "1601d197698f02156dd6f58e15368665924d4202",
+ "syncedAt": "2026-10-03",
+ "files": {
+  "engine/md.js": "b41f7cf17362d61f588ba13253ff42f618b12fab170dc8b8b14806c69fb5ab96",
+  "engine/wx-layouts.js": "b4680707ce77c898f4bb051dd51c60d4c5119efbf56e30b75f5e0f420f6830f3",
+  "engine/photo.js": "e711296f645ff23a67eaf2c4b16d89c0fc91175e7d00dc346004bba143b42c74",
+  "engine/shot.js": "25c8355f97bfe99bce4703e76370667188d4060cdebab3520dc7c98a0d2cbf50"
+ },
+ "note": "engine/ 下这 4 个文件与工作台 dist/ 下的同名文件逐字相同；用 node scripts/sync-from-workbench.js 更新，不要在这里单独改。"
+}
