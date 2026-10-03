@@ -35,13 +35,21 @@ window.__kit={
   const mean=s/n,sd=Math.sqrt(Math.max(0,s2/n-mean*mean)),light=mean>0.55,busy=sd>0.10;
   if(busy||!light){const halo=light?'rgba(255,255,255,0.85)':'rgba(0,0,0,0.6)';g.save();g.shadowColor=halo;g.shadowBlur=size*0.22;if(!busy){g.shadowOffsetX=size*0.05;g.shadowOffsetY=size*0.05}g.fillStyle=halo;g.strokeStyle=halo;g.lineJoin='round';if(busy){g.lineWidth=size*0.1;g.strokeText(text,x,y)}g.fillText(text,x,y);g.restore()}
   g.globalAlpha=0.92;g.fillStyle=light?'#1A1A1A':'#FFFFFF';g.fillText(text,x,y);g.restore();return {size,light,busy,mean:+mean.toFixed(3),sd:+sd.toFixed(3)}},
- async banner(kind,url,title,accent,credit){
-  const img=await loadImage(url);const big=kind==='shot'?drawShotBanner(img,title,accent,2):drawPhotoBanner(img,title,accent||PHOTO_FALLBACK_ACCENT,2);
+ async banner(kind,url,title,accent,credit,spec){
+  const img=await loadImage(url);const big=kind==='shot'?await drawShotBanner(img,title,accent,2,spec||{}):drawPhotoBanner(img,title,accent||PHOTO_FALLBACK_ACCENT,2);
   let info=null;if(credit){if(!(await this.creditReady(credit)))throw Error('署名字体没加载上');info=this.drawCredit(big,credit)}
-  const wide=scaledCanvas(big,900,383);return {wide:wide.toDataURL('image/png'),source:big.toDataURL('image/png'),credit:info}},
- async frame(url,anns,accent){const img=await loadImage(url);const W=img.naturalWidth,H=img.naturalHeight;const placed=[];
-  for(const a0 of (anns||[]).slice(0,3)){const a=Object.assign({shape:'rect',label:'',zoom:2.5},a0);if(a.cx==null)shotAutoPlace(a,W,H,placed);else shotFitCallout(a,W,H);placed.push(a)}
-  const c=shotFramed(img,placed,accent||'#FF5A36');return {url:c.toDataURL('image/png'),w:c.width,h:c.height,annotations:placed}},
+  const wide=scaledCanvas(big,900,383);return {wide:wide.toDataURL('image/png'),source:big.toDataURL('image/png'),credit:info,spot:big.__spot||null}},
+ /* 截图标注：文字行检测（给 --lines 用），返回每一行的像素框和一张带编号的预览图 */
+ async lines(url){const img=await loadImage(url);const W=img.naturalWidth,H=img.naturalHeight;const {bands}=spotBands(img,{x:0,y:0,w:W,h:H});
+  const c=makeCanvas(W,H),g=c.getContext('2d');g.drawImage(img,0,0);const fs=Math.max(12,Math.round(W*0.012));g.font='700 '+fs+'px sans-serif';g.textBaseline='middle';
+  bands.forEach((b,i)=>{g.strokeStyle='#D7261E';g.lineWidth=Math.max(1,W*0.0012);g.strokeRect(b.x-2,b.y-2,b.w+4,b.h+4);const t=String(i+1),tw=g.measureText(t).width+fs*0.6;g.fillStyle='#D7261E';g.fillRect(Math.max(0,b.x-tw-6),b.y+b.h/2-fs*0.7,tw,fs*1.4);g.fillStyle='#fff';g.fillText(t,Math.max(0,b.x-tw-6)+fs*0.3,b.y+b.h/2)});
+  return {W,H,lines:bands,url:c.toDataURL('image/png')}},
+ /* 截图标注：把框贴合到文字（亮条按行、荧光笔按字），和网页编辑器一样 */
+ async snap(url,strips,marks){const img=await loadImage(url);return {strips:strips.flatMap(r=>spotSnapStrip(img,r)).map(b=>({x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.w),h:Math.round(b.h)})),marks:marks.map(r=>spotSnapMark(img,r)).map(b=>({x:Math.round(b.x),y:Math.round(b.y),w:Math.round(b.w),h:Math.round(b.h)}))}},
+ /* 截图标注正文图：spotRender（同 engine/shot.js），道具图片在这里加载 */
+ async spot(url,spec,credit,type){const img=await loadImage(url);const c=spotRender(img,Object.assign({},spec,{props:await spotLoadProps(spec.props,img)}));
+  let info=null;if(credit){if(!(await this.creditReady(credit)))throw Error('署名字体没加载上');info=this.drawCredit(c,credit)}
+  return {url:type==='jpg'?c.toDataURL('image/jpeg',0.9):c.toDataURL('image/png'),w:c.width,h:c.height,spot:c.__spot,credit:info}},
  async credit(url,text,type,quality){const img=await loadImage(url);const c=makeCanvas(img.naturalWidth,img.naturalHeight);c.getContext('2d').drawImage(img,0,0);
   if(!(await this.creditReady(text)))throw Error('署名字体没加载上');const info=this.drawCredit(c,text);return {url:c.toDataURL(type||'image/png',quality||0.92),credit:info,w:c.width,h:c.height}}
 };`.replaceAll('${CF}', CREDIT_FAMILY);

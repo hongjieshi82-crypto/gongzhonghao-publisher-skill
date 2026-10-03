@@ -36,7 +36,7 @@ export function stylesWithSamples(samplesFrom) {
 }
 
 export function sheetHtml(rows, { title = '选一套风格（正文配图 + 横幅封面 + 排版一起定）' } = {}) {
-  const card = r => `<div class="c"><div class="h"><b>${r.n}</b> ${esc(r.name)}<small>${esc(r.dir)} · 排版「${esc(r.layout)}」· ${r.userPhotos ? '用你自己的' + (r.dir === 'screenshot-annotate' ? '截图' : '照片') + '，不生图' : '正文图 ' + esc(r.bodyRatio)}</small></div>
+  const card = r => `<div class="c"><div class="h"><b>${r.n}</b> ${esc(r.name)}<small>${esc(r.dir)} · 排版「${esc(r.layout)}」· ${r.userPhotos ? '用你自己的' + (r.dir === 'screenshot-annotate' ? '截图和照片（截图可加聚光标注）' : '照片') + '，不生图' : '正文图 ' + esc(r.bodyRatio)}</small></div>
 <div class="i">${r.bodyThumb ? `<img src="${dataUri(r.bodyThumb)}" alt="${esc(r.name)} 正文样图">` : `<div class="ph">这套的样图里有作者本人形象，没有随仓库发布<br>用 ${esc(r.dir)}/SAMPLES.md 里的方法生成你自己的样图</div>`}
 ${r.coverThumb ? `<img class="cv" src="${dataUri(r.coverThumb)}" alt="${esc(r.name)} 封面样图">` : ''}</div></div>`;
   return `<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><title>${esc(title)}</title><style>

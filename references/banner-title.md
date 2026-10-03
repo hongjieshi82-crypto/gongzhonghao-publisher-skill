@@ -126,14 +126,14 @@ Prompt 段落：【横幅标题·粗线手绘图解】标题写在一块奶黄�
 （这套由 `node scripts/cover.js --style real-photo` 生成（内部用 `engine/photo.js` 的 drawPhotoBanner），没有 Prompt 段落。）
 
 ### screenshot-annotate（shotAnnotate）→ 排版：产品拆解
-用户自己的产品截图斜放在横幅右侧 · 一处放大镜头冲出画框 · 分层大字在左（网页 canvas 生成，不生图）
+用户自己的截图整张去色压暗 · 关键一行点亮成白色亮条 · 新闻红标签 · 撕边纸条标题叠在左下（网页 canvas 生成，不生图）
 - 字体：系统粗黑体（苹方/思源黑体），主标题 900 字重
-- 填色：主标题近黑 #1F2329；引入小字白字放在主色胶囊里
-- 描边/投影：无描边；主标题下垫一层主色错位字 + 白色柔光，最后一行加主色马克笔底
-- 容器：不用面板；浅灰渐变 + 点阵底，截图带浅色浏览器外框和柔和投影，倾斜约 7°
-- 光效/连接：截图上一处主色框选，用主色连线接到约 2.6 倍的放大镜头，镜头带粗主色描边和编号
-- 层次：点阵底 → 倾斜截图 → 框选和连线 → 放大镜头 → 左侧标题，标题离边缘至少 40px
+- 填色：纸条上近黑 #141414 字；标题里 `==词==` 加黄色荧光笔 #FFE81F；标签红底 #D7261E 白字 + 白底黑字
+- 描边/投影：无描边；纸条和标签都带柔和投影
+- 容器：不用面板；底图就是压暗、去色、越远越虚的截图，下方加深色渐变；标题每行一条撕边白纸条，错开微斜
+- 光效/连接：暗场里只点亮一行（有荧光笔就取那一行），白色柔光 + 羽化边，亮条里保留原色；可选道具（红色问号、台历、手机、透明 PNG）压在右侧
+- 层次：压暗截图 → 亮条和荧光笔 → 亮条左上的红标签 → 道具 → 左下纸条标题，纸条不压住亮条，离边缘至少 30px
 
-（这套由 `node scripts/cover.js --style screenshot-annotate` 生成（内部用 `engine/shot.js` 的 drawShotBanner），没有 Prompt 段落。）
+（这套由 `node scripts/cover.js --style screenshot-annotate` 生成（内部用 `engine/shot.js` 的 drawShotBanner），没有 Prompt 段落；`--line` / `--mark` / `--tag` / `--prop` 指定点亮哪一行和标签，不给就自动挑一行。）
 
 > 本文件与「公众号工作台」的 `skills/workbench-cover/references/banner-title.md` 同源（去掉了工作台内部路径，署名改为可配置）。各风格的 Prompt 段落也已写进 `styles/<目录>/config.json` 的 `coverPrompt` / `coverBanner`，用 `node scripts/prompts.js --style <目录> --kind cover` 可直接取到。

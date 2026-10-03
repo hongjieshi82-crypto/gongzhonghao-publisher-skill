@@ -22,7 +22,7 @@ export function stylePrompts(styleKey, { title, characters, credit } = {}) {
   const out = { style: s.dir, name: s.name, layoutTheme: c.layoutTheme, bodyRatio: c.bodyRatio || '3:2', credit };
   if (s.userPhotos) {
     out.noGeneration = true;
-    out.body = `这套不生图：${c.bodyHint || '用用户自己的照片或截图'}。` + (c.shotFrame ? '每张截图用 node scripts/annotate.js 套浅色外框（可加 1–3 处标注），署名会一起加上。' : '照片按原比例放进文章；右下角署名用 node scripts/credit.js 加。');
+    out.body = `这套不生图：${c.bodyHint || '用用户自己的照片或截图'}。` + (c.shotFrame ? '截图和照片可以混排：要突出的截图用 node scripts/annotate.js 做新闻剪报聚光（先 --lines 看行号，再 --line / --mark / --tag），署名会一起加上；不标注的截图和照片原图放进文章，用 node scripts/credit.js 加署名。' : '照片按原比例放进文章；右下角署名用 node scripts/credit.js 加。');
     out.cover = `封面不生图：用 node scripts/cover.js --style ${s.dir} --photo <用户给的封面${c.shotFrame ? '截图' : '照片'}> 生成 900×383 横幅（${c.coverHint || ''}），标题逐字用文章标题${title ? '「' + title + '」' : ''}，署名自动画在右下角。`;
     return out;
   }

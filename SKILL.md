@@ -80,14 +80,17 @@ node scripts/credit.js 照片1.jpg 照片2.jpg --outdir work/<短名>/images/   
 node scripts/cover.js --style real-photo --photo 封面照片.jpg --md work/<短名>/article.md --images work/<短名>/images/ --out work/<短名>/cover.png
 ```
 
-**截图标注（第 11 套）：** 不生图。请用户给产品截图，问清要标出哪 1–3 处（或不标）。
+**截图标注（第 11 套）：** 不生图。截图和照片可以混排：请用户给截图（和照片），问清哪几张截图要突出哪一句、哪几个词，其余的图原样放。
 
 ```bash
-node scripts/annotate.js --in 截图1.png --out work/<短名>/images/01.png --box "x,y,宽,高,标签" [--ellipse ...] [--accent 珊瑚|海蓝|松绿|葡紫]
-node scripts/cover.js --style screenshot-annotate --photo 封面截图.png --md work/<短名>/article.md --accent 珊瑚 --out work/<短名>/cover.png
+node scripts/annotate.js --in 截图1.png --lines --out work/<短名>/lines-01.png        # 先看文字行编号（打开预览图对照）
+node scripts/annotate.js --in 截图1.png --out work/<短名>/images/01.png --line 7,8 --mark "x,y,宽,高" --tag "说法一｜创始人提过" [--prop question|calendar:OCT:1|phone|道具.png] [--prop-pos br|tr|bl]
+node scripts/annotate.js --in 评论.png --out work/<短名>/images/02.png --mode row --strip "x,y,宽,高" [--mark ...] [--tag "网友评论｜点赞 2.1 万"]
+node scripts/credit.js 照片.jpg 不标注的截图.png --outdir work/<短名>/images/          # 不标注的图：原图 + 署名
+node scripts/cover.js --style screenshot-annotate --photo 封面截图.png --md work/<短名>/article.md [--line N --mark ... --tag ...] --out work/<短名>/cover.png
 ```
 
-坐标是原截图像素；整篇用同一个主色。`annotate.js` 和 `cover.js` 会自动画上署名，不要再叠一层。
+标注三步和工作台网页一样：① 亮条（`--line` 行号或 `--strip` 像素框，自动贴合文字行；评论截图用 `--mode row` 点亮整行）→ ② 黄色荧光笔（`--mark`，要在亮条里）→ ③ 新闻红标签（`--tag "红底｜白底"`）和可选道具。坐标是原截图像素；标签颜色固定，`--accent`（珊瑚/海蓝/松绿/葡紫）只管排版，`cover.js` 和 `build.js` 传同一个。`annotate.js`、`credit.js`、`cover.js` 会自动画上署名，不要再叠一层。
 
 ### 5. 排版成 HTML
 
@@ -98,7 +101,7 @@ node scripts/build.js --md work/<短名>/article.md --style <目录名> --images
 
 - `--style` 用用户选的那套；排版主题、变体、配色由风格自动绑定，不要另选。
 - `--kicker` 按文章写一个 2–8 字的栏目小字（不给会用排版默认值，并提示）。
-- 「截图标注」加 `--accent` 与截图同色；「真实图片」主色会从照片里自动取（与 `cover.js` 写下的 `cover.png.wx.json` 一致）。
+- 「截图标注」加 `--accent`，和 `cover.js` 用同一个排版主色（截图上的标签固定新闻红，不受影响）；「真实图片」主色会从照片里自动取（与 `cover.js` 写下的 `cover.png.wx.json` 一致）。
 - 看输出：`✓ 自检通过` 才算完成。有 ⚠ 提示（图片说明被清空、删了参考来源、封面比例不对……）要处理或告诉用户。
 
 ### 6. 交付
@@ -120,7 +123,7 @@ node scripts/build.js --md work/<短名>/article.md --style <目录名> --images
 | `node scripts/prompts.js --style S --md a.md [--kind body\|cover]` | 该风格的生图规则（署名已按配置替换） |
 | `node scripts/build.js --md a.md --style S --images d/ --cover c.png --out o.html` | 排版并输出单文件 HTML（含自检） |
 | `node scripts/cover.js --style real-photo\|screenshot-annotate --photo p --md a.md --out c.png` | 照片 / 截图的横幅封面 |
-| `node scripts/annotate.js --in s.png --out o.png [--box ...]` | 截图外框 + 标注 |
+| `node scripts/annotate.js --in s.png --out o.png --line N [--mark ...] [--tag ...]` | 截图标注：新闻剪报聚光（`--lines` 先看行号） |
 | `node scripts/credit.js 图片... --outdir d/` | 手写署名（保留元数据） |
 | `node scripts/compare.js a.html b.html` | 比较两个成品页的复制内容 |
 | `node scripts/selftest.js` | 11 套风格全部构建一遍的自检 |

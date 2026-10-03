@@ -21,7 +21,7 @@ Author: 史鸿洁 (Shi Hongjie, GitHub hongjieshi82-crypto). CC BY-NC 4.0: keep 
 | 8 | 波普拼贴人像 | `pop-portrait` | 波普拼贴（wxJournal · pop） | 钴蓝 #2F5BD3 | 3:2 | 生图（需用户照片） | 仓库不带，见 SAMPLES.md | 个人故事、轻松观点、作者出镜 |
 | 9 | 粗线手绘图解 | `rough-sketch-diagram` | 粗线手绘（wxCards · sketch） | 天蓝 #2F7FC1 | 16:9 | 生图 | 有 | 流程、架构、概念拆解 |
 | 10 | 真实图片 | `real-photo` | 图片优先（wxPhoto） | 从照片取色 | 原图比例 | 用户自己的照片 | 有 | 游记、探店、活动记录、实拍 |
-| 11 | 截图标注 | `screenshot-annotate` | 产品拆解（wxShot） | 珊瑚 / 海蓝 / 松绿 / 葡紫 | 原图比例（套外框） | 用户自己的截图 | 有 | 产品评测、功能教程、上手体验 |
+| 11 | 截图标注 | `screenshot-annotate` | 产品拆解（wxShot） | 珊瑚 / 海蓝 / 松绿 / 葡紫 | 标注后 3:2（评论 4:3），不标注保持原图 | 用户自己的截图和照片 | 有 | 产品评测、功能教程、上手体验 |
 
 “适合”一栏只是给用户的参考，不是助手替用户做决定的依据。用户说“你定”时，最多推荐 2–3 套并说明理由，仍然请用户拍板。
 
@@ -31,7 +31,7 @@ Author: 史鸿洁 (Shi Hongjie, GitHub hongjieshi82-crypto). CC BY-NC 4.0: keep 
 - **6 霓虹科幻卡通**：默认三个原创角色（宇航员小孩、牛仔帽机器人、红辫子女孩）；用户要自己的角色时用 `--characters "角色说明"`，仍然只画原创角色。作者本人入画时只取脸和发型特征。
 - **7、8 人像**：必须有用户提供的人像照片；只取脸和发型特征，不照搬照片姿势、衣服、背景，不用样图里的人代替。没有照片先要照片。
 - **10 真实图片**：不生图。正文照片用 `credit.js` 加署名，封面用 `cover.js --style real-photo`，排版主色自动取自照片。
-- **11 截图标注**：不生图。正文截图用 `annotate.js` 套外框并加 0–3 处标注，封面用 `cover.js --style screenshot-annotate`；整篇用同一个主色，`build.js` 也传同一个 `--accent`。
+- **11 截图标注**：不生图，截图和照片可以混排。要突出的截图用 `annotate.js` 做新闻剪报聚光（亮条 → 黄色荧光笔 → 新闻红标签，可加问号/台历/手机/PNG 道具），不标注的截图和照片原图放、用 `credit.js` 加署名；封面用 `cover.js --style screenshot-annotate`（只点亮一行，纸条标题）。排版主色整篇用同一个，`build.js` 也传同一个 `--accent`。
 
 ## 封面
 
